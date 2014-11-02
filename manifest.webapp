@@ -1,0 +1,11 @@
+{
+    "version": "0.1",
+    "name": "Keep In Mind",
+    "description": "A memory game",
+    "launch_path": "/index.html",
+    "developer": {
+        "name": "Mert Kahyaoğlu",
+        "url": "ceng.mu.edu.tr/~mkahyaoglu11"
+    },
+    "installs_allowed_from": ["*"]
+}
