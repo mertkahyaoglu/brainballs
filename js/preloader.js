@@ -1,21 +1,23 @@
 GameStates.Preloader = {
 
     preload: function() {
-         game.load.atlas('atlas', 'assets/atlas.png', 'assets/atlas.json');
+        this.add.sprite(0, 0, 'bg');
+        this.loadingbar = this.add.sprite(this.world.centerX - this.cache.getImage('loadingbar').width / 2, this.world.centerY, 'loadingbar');
+        this.load.setPreloadSprite(this.loadingbar);
+
+        //load the assets
+        this.load.image('play', 'assets/play.png');
+        this.load.image('scores', 'assets/scores.png');
+        this.load.image('panel', 'assets/panel.png');
     },
+
     create: function(){
-        this.input.maxPointers = 1;
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        if(!this.game.device.desktop && !this.isFirefoxOS) {
-            this.scale.forceOrientation(true, false, 'screenRotate');
-        }
-        this.scale.pageAlignHorizontally = true;
-        this.scale.pageAlignVertically = true;
-        this.scale.setScreenSize(true);
-        this.state.start('Game');
+        this.loadingbar.cropEnabled = false;
     },
-    isFirefoxOS: function(){
-        return (!!"mozApps" in navigator && navigator.userAgent.search("Mobile")) != -1;
+
+    update: function() {
+        if(this.time.totalElapsedSeconds() > 1) // wait if loads too quick to show logo.
+            this.state.start('Menu');
     }
-    
+
 };

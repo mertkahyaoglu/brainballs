@@ -2,10 +2,12 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Keep In Mind</title>
-	<script src="phaser.js" defer></script>
-	<script src="init.js"></script>
+	<script src="js/phaser.min.js" defer></script>
+	<script src="js/init.js"></script>
 	<script src="js/preloader.js" defer></script>
 	<script src="js/states/menu.js" defer></script>
+	<script src="js/states/scores.js" defer></script>
+	<script src="js/states/game.js" defer></script>
 	<style type="text/css">
 		html, body {
 		    background: #000;
@@ -17,5 +19,18 @@
 </head>
 <body>
 	<div id="game"></div>
+	<script type="text/javascript">
+	window.onload = function() {
+		var game = new Phaser.Game(320, 480, Phaser.CANVAS, "game"); //game object
+		game.state.add('Init', GameStates.Init);   //initialize the game
+	    game.state.add('Preloader', GameStates.Preloader);   //loads the assets
+	    game.state.add('Menu', GameStates.Menu);             //menu
+	    game.state.add('Scores', GameStates.Scores);             //menu
+	    game.state.add('Game', GameStates.Game);             //game
+	    game.state.add('GameOver', GameStates.GameOver);     //gameover
+	    game.state.add('GameWin', GameStates.GameWin);       //gamewin
+	    game.state.start('Init', GameStates.Init);
+		}
+	</script>
 </body>
 </html>

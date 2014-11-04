@@ -1,11 +1,24 @@
 var GameStates = {}; //game states
 
-document.addEventListener("DOMContentLoaded", function()  {
-    var game = new Phaser.Game(320, 480, Phaser.CANVAS, "game"); //game object
-    game.state.add('Preloader', GameStates.Preloader);   //loads the assets
-    game.state.add('Menu', GameStates.Menu);             //menu
-    game.state.add('Game', GameStates.Game);             //game
-    game.state.add('GameOver', GameStates.GameOver);     //gameover
-    game.state.add('GameWin', GameStates.GameWin);       //gamewin
-    game.state.start('Preloader');
-});
+GameStates.Init = {
+
+    preload: function() {
+        this.load.image('loadingbar', 'assets/loadingbar.png');
+        this.load.image('bg', 'assets/bg.png');
+    },
+
+    create: function(){
+        this.input.maxPointers = 1;
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        if(!this.game.device.desktop && !this.isFirefoxOS) this.scale.forceOrientation(true, false, 'screenRotate');
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
+        this.scale.setScreenSize(true);
+        this.state.start('Preloader');
+    },
+
+    isFirefoxOS: function(){
+        return (!!"mozApps" in navigator && navigator.userAgent.search("Mobile")) != -1;
+    }
+    
+};
