@@ -9,6 +9,8 @@ GameStates.Preloader = {
         this.load.image('play', 'assets/play.png');
         this.load.image('scores', 'assets/scores.png');
         this.load.image('panel', 'assets/panel.png');
+        this.load.image('level', 'assets/level.png');
+        this.load.image('levelitem', 'assets/levelitem.png');
         this.load.image('timer', 'assets/timer.png');
         this.load.image('ball_idle', 'assets/ball_idle.png');
         this.load.image('ball_select', 'assets/ball_select.png');

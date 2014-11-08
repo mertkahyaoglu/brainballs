@@ -10,6 +10,7 @@ GameStates.Game = {
 	setupWorld: function() {
 		this.add.sprite(0, 0, 'bg');
 		this.add.sprite(0, 0, 'panel');
+		this.add.sprite(this.world.width -  57, 0, 'level');
 		this.timer = this.add.sprite(this.world.centerX, this.world.height, "timer");
 		this.timer.anchor.setTo(0.5, 1);
 

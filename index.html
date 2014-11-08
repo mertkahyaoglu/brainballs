@@ -7,6 +7,7 @@
 	<script src="js/levels.js"></script>
 	<script src="js/screens/preloader.js" defer></script>
 	<script src="js/screens/menu.js" defer></script>
+	<script src="js/screens/levels.js" defer></script>
 	<script src="js/screens/scores.js" defer></script>
 	<script src="js/screens/game.js" defer></script>
 	<script src="js/screens/gamewin.js" defer></script>
@@ -17,16 +18,17 @@
 	<div id="game"></div>
 	<script type="text/javascript">
 	window.onload = function() {
-		var game = new Phaser.Game(320, 480, Phaser.CANVAS, "game"); //game object
-		game.state.add('Init', GameStates.Init);   //initialize the game
-	    game.state.add('Preloader', GameStates.Preloader);   //loads the assets
-	    game.state.add('Menu', GameStates.Menu);             //menu
-	    game.state.add('Scores', GameStates.Scores);             //menu
-	    game.state.add('Game', GameStates.Game);             //game
-	    game.state.add('GameOver', GameStates.GameOver);     //gameover
-	    game.state.add('GameWin', GameStates.GameWin);       //gamewin
+		var game = new Phaser.Game(320, 480, Phaser.CANVAS, "game");
+		game.state.add('Init', GameStates.Init);
+	    game.state.add('Preloader', GameStates.Preloader);
+	    game.state.add('Menu', GameStates.Menu);
+	    game.state.add('Levels', GameStates.Levels);
+	    game.state.add('Scores', GameStates.Scores);
+	    game.state.add('Game', GameStates.Game);
+	    game.state.add('GameOver', GameStates.GameOver);
+	    game.state.add('GameWin', GameStates.GameWin);
 	    game.state.start('Init', GameStates.Init);
-		}
+	}
 	</script>
 </body>
 </html>
