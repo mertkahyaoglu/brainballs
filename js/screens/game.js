@@ -10,7 +10,10 @@ GameStates.Game = {
 	setupWorld: function() {
 		this.add.sprite(0, 0, 'bg');
 		this.add.sprite(0, 0, 'panel');
-		this.add.sprite(this.world.width -  57, 0, 'level');
+		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2, 0, 'level');
+		level.anchor.setTo(0.5, 0);
+		var lvText = this.add.text(level.x, level.y, this.level, { font: "36px Concert One", fill: "#fff"});
+		lvText.anchor.setTo(0.5, 0);
 		this.timer = this.add.sprite(this.world.centerX, this.world.height, "timer");
 		this.timer.anchor.setTo(0.5, 1);
 
@@ -57,6 +60,12 @@ GameStates.Game = {
 		var rndSequnce = [];
 		for (var i = 0; i < this.NUM_BALLS; i++) rndSequnce.push(i);
     	this.sequence = this.math.shuffleArray(rndSequnce);
+    	
+    	for (var i = 0; i < this.NUM_BALLS; i++) {
+    		var ball = this.balls.getAt(this.sequence[i]);
+    		this.add.tween(ball.scale).to( {x: 1.3, y: 1.3}, 500, Phaser.Easing.Back.InOut, true, i * 500, false).to( {x: 1, y: 1}, 500, Phaser.Easing.Back.InOut, true, false);
+    	}
+
 	},
 
 	getMatches: function() {
@@ -71,14 +80,22 @@ GameStates.Game = {
 
 	update: function () {
 		if (this.picks <= 0) {
+			var win = false;
 			for (var i = 0, matches = this.getMatches(), len = matches.length; i < len; i++) {
-				if (matches[i] == 1)
+				if (matches[i] == 1) {
 					this.balls.getAt(i).loadTexture('ball_true', 0);
+					win = true;
+				}
 				else {
 					this.balls.getAt(i).loadTexture('ball_false', 0);
+					win = false;
 				}
 			}
-			
+			if (win) {
+				this.state.start("GameWin", true, false, this.level + 1);
+			}else {
+				this.state.start("GameOver", true, false, this.level);
+			}
 		}
 	},
 }
