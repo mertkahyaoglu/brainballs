@@ -16,6 +16,9 @@ GameStates.Preloader = {
         this.load.image('ball_select', 'assets/ball_select.png');
         this.load.image('ball_false', 'assets/ball_false.png');
         this.load.image('ball_true', 'assets/ball_true.png');
+        this.load.image('next', 'assets/next.png');
+        this.load.image('retry', 'assets/retry.png');
+        this.load.image('home', 'assets/home.png');
     },
 
     create: function(){
