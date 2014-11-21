@@ -5,6 +5,8 @@ GameStates.Levels = {
 		this.levels = this.add.group();
 
 		var i = 0;
+		var Levels = this.cache.getJSON('levels').levels;
+
 		for(var lv in Levels) {
 		    var level = this.levels.create(((this.world.width-(3*90))/2+(i%3)*90),
 		    	50+(90*this.math.floor(i/3)), 'levelitem');
@@ -20,7 +22,7 @@ GameStates.Levels = {
 	},
 
 	onLevelSelected: function(level) {
-		this.state.start("Game", true, false, this.levels.getIndex(level) + 1);
+		this.state.start("Game", true, false, this.levels.getIndex(level));
 	}
 
 }

@@ -6,6 +6,7 @@ GameStates.Preloader = {
         this.load.setPreloadSprite(this.loadingbar);
 
         //load the assets
+        this.load.json('levels', 'assets/levels.json');
         this.load.image('play', 'assets/play.png');
         this.load.image('scores', 'assets/scores.png');
         this.load.image('panel', 'assets/panel.png');
@@ -19,6 +20,7 @@ GameStates.Preloader = {
         this.load.image('next', 'assets/next.png');
         this.load.image('retry', 'assets/retry.png');
         this.load.image('home', 'assets/home.png');
+        this.load.image('gameover', 'assets/gameover.png');
     },
 
     create: function(){
