@@ -18,7 +18,8 @@
 	<div id="game"></div>
 	<script type="text/javascript">
 	window.onload = function() {
-		var game = new Phaser.Game(320, 480, Phaser.CANVAS, "game");
+		var width = 320, height = 480;
+		var game = new Phaser.Game(width, height, Phaser.CANVAS, "game");
 		game.state.add('Init', GameStates.Init);
 	    game.state.add('Preloader', GameStates.Preloader);
 	    game.state.add('Menu', GameStates.Menu);
