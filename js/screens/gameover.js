@@ -38,7 +38,7 @@ GameStates.GameOver = {
 	},
 
 	restart: function() {
-		this.state.start('Game', true, false, 0);
+		this.state.start('Game', true, false, 0, 0);
 	},
 
 	menu: function() {
