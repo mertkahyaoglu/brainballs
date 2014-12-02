@@ -2,6 +2,8 @@ GameStates.Levels = {
 
 	create: function() {
 		this.add.sprite(0, 0, 'bg');
+		var levelsText = this.add.text(this.world.width/2, 25, "Levels", { font: "48px Concert One", fill: "#fff"});
+		levelsText.anchor.setTo(0.5, 0);
 		this.levels = this.add.group();
 
 		var i = 0;
@@ -9,7 +11,7 @@ GameStates.Levels = {
 
 		for(var lv in Levels) {
 		    var level = this.levels.create(((this.world.width-(3*90))/2+(i%3)*90),
-		    	50+(90*this.math.floor(i/3)), 'levelitem');
+		    	100+(90*this.math.floor(i/3)), 'levelitem');
 	        level.inputEnabled = true;
 	        level.input.start(0, true);
 	        level.events.onInputDown.addOnce(this.onLevelSelected.bind(this));

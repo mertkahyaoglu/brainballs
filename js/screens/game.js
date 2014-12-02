@@ -1,7 +1,8 @@
 GameStates.Game = {
 
-	init: function(level) {
+	init: function(level, score) {
 		this.level = level;
+		this.prevscore = score;
 	},
 	
 	create: function() {
@@ -21,8 +22,8 @@ GameStates.Game = {
 		this.timerRatio = (this.world.height - this.cache.getImage("panel").height) / this.timer.height;
 
 		//variables
-		this.startTime = this.time.now;
 		this.timeIsOut = false;
+		this.finish = false;
 		this.balls = undefined;
 		this.sequence = [];
 		this.playerSequence = [];
@@ -35,7 +36,6 @@ GameStates.Game = {
 		//setup balls
 		this.timerMilliseconds = level.time;
 		this.animationDuration = level.duration;
-		console.log(this.animationDuration+50);
 		this.NUM_BALLS = level.num_balls;
 		this.picks = this.NUM_BALLS;
 		this.balls = this.add.group();
@@ -80,6 +80,7 @@ GameStates.Game = {
 		    ball.input.start(0, true);
 		    ball.events.onInputDown.addOnce(this.onBallSelect.bind(this));
 		}
+		this.startTime = this.time.now;
 		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.timerMilliseconds, Phaser.Easing.None, true, 500, false);
 		this.timerTween.onComplete.addOnce(this.timeOut, this);
 	},
@@ -98,7 +99,11 @@ GameStates.Game = {
 	},
 
 	update: function () {
+		if (!this.finish) {
+			this.score = this.math.floor((this.time.now - this.startTime) / 1000);
+		}
 		if (this.picks <= 0) {
+			this.finish = true;
 			this.timerTween.stop();
 			var result = "GameWin";
 			for (var i = 0, matches = this.getMatches(), len = matches.length; i < len; i++) {
@@ -112,17 +117,18 @@ GameStates.Game = {
 			}
 			var game = this;
 			setTimeout(function() {
-				game.state.start(result, true, false, game.level);
+				game.state.start(result, true, false, game.level, game.score+game.prevscore);
 			}, 1000);
 		}
 		if (this.timeIsOut) {
+			this.finish = true;
 			for (var i = 0; i < this.NUM_BALLS; i++) {
 				this.balls.getAt(i).inputEnabled = false;				
 			}
 			var game = this;
 			setTimeout(function() {
 				console.log("Time is out");
-				game.state.start("GameOver", true, false, game.level);
+				game.state.start("GameOver", true, false, game.level, game.score+game.prevscore);
 			}, 1000);
 		}
 	}

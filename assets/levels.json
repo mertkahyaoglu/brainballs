@@ -2,17 +2,6 @@
 	"levels": [
 		{
 			"level" : 1,
-			"num_balls" : 3,
-			"balls_position" : [
-				{"x":160, "y":160}, 
-				{"x": 96, "y":250}, 
-				{"x":224, "y":250}
-			],
-			"time" : 4000,
-			"duration" : 300
-		},
-		{
-			"level" : 2,
 			"num_balls" : 4,
 			"balls_position" : [
 				{"x":100, "y":180}, 
@@ -24,7 +13,7 @@
 			"duration" : 250
 		},
 		{
-			"level" : 3,
+			"level" : 2,
 			"num_balls" : 5,
 			"balls_position" : [
 				{"x":100, "y":160}, 
@@ -37,7 +26,7 @@
 			"duration" : 300
 		},
 		{
-			"level" : 4,
+			"level" : 3,
 			"num_balls" : 6,
 			"balls_position" : [
 				{"x":100, "y":140}, 
@@ -51,7 +40,7 @@
 			"duration" : 400
 		},
 		{
-			"level" :5,
+			"level" :4,
 			"num_balls" : 7,
 			"balls_position" : [
 				{"x":160, "y":125}, 
@@ -66,7 +55,7 @@
 			"duration" : 400
 		},
 		{
-			"level" :6,
+			"level" :5,
 			"num_balls" : 8,
 			"balls_position" : [
 				{"x":100, "y":140},
@@ -82,7 +71,7 @@
 			"duration" : 350
 		},
 		{
-			"level" :7,
+			"level" :6,
 			"num_balls" : 9,
 			"balls_position" : [
 				{"x":80 , "y":150},

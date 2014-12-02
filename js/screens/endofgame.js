@@ -1,0 +1,7 @@
+GameStates.Endofgame = {
+
+	create: function() {
+
+	}
+
+};
