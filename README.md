@@ -1,7 +1,7 @@
-Brain Balls
+Brain Balls [(Demo)][1]
 ==========
 
-#[Demo][1]
+
 
 Brain Balls is a FirefoxOs Game created with Phaser.js. The aim of the game is to remember sequences of balls.
 
