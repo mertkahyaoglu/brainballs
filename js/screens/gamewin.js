@@ -10,28 +10,19 @@ GameStates.GameWin = {
 		var levelsText = this.add.text(this.world.width/2, 50, "Score:"+this.score, { font: "40px Concert One", fill: "#fff"});
 		levelsText.anchor.setTo(0.5, 0);
 
-		this.next = this.add.sprite(this.world.width/2-50,200, 'next');
-		this.next.anchor.setTo(0.5, 0.5);
-		this.next.alpha = 0;
-		var tweenNext = this.add.tween(this.next).to( {alpha:1}, 500, Phaser.Easing.None, true , 200, false);
-		tweenNext.onComplete.addOnce(this.enableNext, this);
+		var next = this.add.sprite(this.world.width/2-50,200, 'next');
+		next.anchor.setTo(0.5, 0.5);
+		next.alpha = 0;
+		next.inputEnabled = true;
+		next.events.onInputDown.addOnce(this.nextLevel, this);
+		this.add.tween(next).to( {alpha:1}, 500, Phaser.Easing.None, true , 200, false);
 
-		this.home = this.add.sprite(this.world.width/2+50,200, 'home');
-		this.home.anchor.setTo(0.5, 0.5);
-		this.home.alpha = 0;
-		var tweenHome = this.add.tween(this.home).to( {alpha:1}, 500, Phaser.Easing.None, true , 200, false);
-		tweenHome.onComplete.addOnce(this.enableHome, this);
-	},
-
-	enableNext: function() {
-		this.next.inputEnabled = true;
-		this.next.events.onInputDown.addOnce(this.nextLevel, this);
-	},
-
-	enableHome: function() {
-		//save score
-		this.home.inputEnabled = true;
-		this.home.events.onInputDown.addOnce(this.menu, this);
+		var home = this.add.sprite(this.world.width/2+50,200, 'home');
+		home.anchor.setTo(0.5, 0.5);
+		home.alpha = 0;
+		home.inputEnabled = true;
+		home.events.onInputDown.addOnce(this.menu, this);
+		this.add.tween(home).to( {alpha:1}, 500, Phaser.Easing.None, true , 200, false);
 	},
 
 	nextLevel: function() {

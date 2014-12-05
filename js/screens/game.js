@@ -13,8 +13,8 @@ GameStates.Game = {
 	setupWorld: function() {
 		this.add.sprite(0, 0, 'bg');
 		var panel = this.add.sprite(0, 0, 'panel');
-		var notificationText = this.add.text(10, panel.height/2, "Ready!", { font: "30px Concert One", fill: "#fff"});
-		notificationText.anchor.setTo(0.5, 0.5);
+		this.notificationText = this.add.text(10, panel.height/2, "Ready!", { font: "30px Concert One", fill: "#fff"});
+		this.notificationText.anchor.setTo(0, 0.5);
 		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2, 0, 'level');
 		level.anchor.setTo(0.5, 0);
 		var lvText = this.add.text(level.x, level.y, this.level+1, { font: "36px Concert One", fill: "#fff"});
@@ -22,33 +22,36 @@ GameStates.Game = {
 		this.timer = this.add.sprite(this.world.centerX, this.world.height, "timer");
 		this.timer.anchor.setTo(0.5, 1);
 		this.timerRatio = (this.world.height - this.cache.getImage("panel").height) / this.timer.height;
-
-		//variables
-		this.timeIsOut = false;
-		this.finish = false;
-		this.balls = undefined;
-		this.sequence = [];
-		this.playerSequence = [];
-		this.NUM_BALLS = 0;
-		this.picks = 0;
 	},
 
 	setupLevel: function() {
 		var level = this.cache.getJSON('levels').levels[this.level];
-		//setup balls
-		this.timerMilliseconds = level.time;
-		this.animationDuration = level.duration;
+
+		//variables
+		this.gametime = this.time.now;
+		this.waittime = 3000;
+		this.animatetime = level.animatetime;
+		this.started = false;
+		this.animated = false;
+		this.timeIsOut = false;
+		this.finish = false;
+		this.sequence = [];
+		this.playerSequence = [];
+		this.levelTime = level.time;
 		this.NUM_BALLS = level.num_balls;
 		this.picks = this.NUM_BALLS;
 		this.balls = this.add.group();
+
+		//create balls
 	    for (var i = 0, ball; i < this.NUM_BALLS; i++) {
 	        ball = this.balls.create(level.balls_position[i].x, level.balls_position[i].y, 'ball_idle');
 	        ball.anchor.setTo(0.5, 0.5);
 	    }
 
 	    //setup sequence
-	    this.createRandomSequnce();
-	    this.animateSequence();
+		for (var i = 0; i < this.NUM_BALLS; i++) 
+			this.sequence.push(i);
+    	this.sequence = this.math.shuffleArray(this.sequence);
 	},
 
 	onBallSelect: function(ball, pointer) {
@@ -57,22 +60,15 @@ GameStates.Game = {
 		this.picks--;
 	},
 
-	createRandomSequnce: function () {
-		var rndSequnce = [];
-		for (var i = 0; i < this.NUM_BALLS; i++) rndSequnce.push(i);
-    	this.sequence = this.math.shuffleArray(rndSequnce);
-	},
-
 	animateSequence: function() {
-		var game = this;
-		setTimeout(function(){
-			for (var i = 0; i < game.NUM_BALLS; i++) {
-	    		var ball = game.balls.getAt(game.sequence[i]);
-	    		var ballTween = game.add.tween(ball.scale).to( {x: 1.3, y: 1.3}, game.animationDuration, Phaser.Easing.Back.InOut, true, i * game.animationDuration, false).to( {x: 1, y: 1}, game.animationDuration, Phaser.Easing.Back.InOut, true, false);
-	    		if (i == game.NUM_BALLS - 1)
-	    			ballTween.onComplete.addOnce(game.startGame, game);
-	    	}
-		}, 1000);
+		this.animated = true;			
+		var ballTween;
+		var animateperball = this.animatetime / this.NUM_BALLS / 2;
+		for (var i = 0; i < this.NUM_BALLS; i++) {
+    		var ball = this.balls.getAt(this.sequence[i]);
+
+    		ballTween = this.add.tween(ball.scale).to( {x: 1.3, y: 1.3}, animateperball, Phaser.Easing.Back.InOut, true, i * animateperball, false).to( {x: 1, y: 1}, animateperball, Phaser.Easing.Back.InOut, true, false);
+    	}
 	},
 
 	startGame: function() {
@@ -82,13 +78,10 @@ GameStates.Game = {
 		    ball.input.start(0, true);
 		    ball.events.onInputDown.addOnce(this.onBallSelect.bind(this));
 		}
+		this.notificationText.setText("Start!");
+		this.started = true;
 		this.startTime = this.time.now;
-		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.timerMilliseconds, Phaser.Easing.None, true, 500, false);
-		this.timerTween.onComplete.addOnce(this.timeOut, this);
-	},
-
-	timeOut: function() {
-		this.timeIsOut = true;
+		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.levelTime, Phaser.Easing.None, true, 500, false);
 	},
 
 	getMatches: function() {
@@ -100,11 +93,22 @@ GameStates.Game = {
 		return matches;
 	},
 
-	update: function () {
-		if (!this.finish) {
-			this.score = this.math.floor((this.time.now - this.startTime) / 1000);
+	getGameTime: function() {
+		return this.time.elapsedSince(this.gametime);
+	},
+
+	update: function() {
+		console.log("Game Time:", this.getGameTime());
+		if(!this.animated && this.getGameTime() >= this.waittime) {
+			this.animateSequence();
 		}
-		if (this.picks <= 0) {
+		if (!this.started && this.getGameTime() >= this.waittime + this.animatetime) {
+			this.startGame();
+		}
+		if (!this.finish) {
+			this.score = this.math.floor(this.time.elapsedSecondsSince(this.startTime));
+		}
+		if (!this.finish && this.picks <= 0) {
 			this.finish = true;
 			this.timerTween.stop();
 			var result = "GameWin";
@@ -117,12 +121,17 @@ GameStates.Game = {
 					result = "GameOver";
 				}
 			}
+			if (result == "GameWin")
+				this.notificationText.setText("Good Job!");
+			else
+				this.notificationText.setText("Wrong!");
 			var game = this;
 			setTimeout(function() {
 				game.state.start(result, true, false, game.level, game.score+game.prevscore);
 			}, 1000);
 		}
-		if (this.timeIsOut) {
+		if (this.started && this.time.elapsedSince(this.startTime) >= this.levelTime) {
+			this.notificationText.setText("Time is out!");
 			this.finish = true;
 			for (var i = 0; i < this.NUM_BALLS; i++) {
 				this.balls.getAt(i).inputEnabled = false;				

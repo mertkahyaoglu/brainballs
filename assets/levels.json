@@ -10,7 +10,7 @@
 				{"x":220, "y":280}
 			],
 			"time" : 4000,
-			"duration" : 250
+			"animatetime" : 3200
 		},
 		{
 			"level" : 2,
@@ -23,7 +23,7 @@
 				{"x":160, "y":230}
 			],
 			"time" : 6000,
-			"duration" : 300
+			"animatetime" : 3000
 		},
 		{
 			"level" : 3,
@@ -37,7 +37,7 @@
 				{"x":220, "y":340}
 			],
 			"time" : 6000,
-			"duration" : 400
+			"animatetime" : 400
 		},
 		{
 			"level" :4,
@@ -52,7 +52,7 @@
 				{"x":160, "y":325}
 			],
 			"time" : 6500,
-			"duration" : 400
+			"animatetime" : 400
 		},
 		{
 			"level" :5,
@@ -68,7 +68,7 @@
 				{"x":220, "y":380}
 			],
 			"time" : 7000,
-			"duration" : 350
+			"animatetime" : 350
 		},
 		{
 			"level" :6,
@@ -85,7 +85,7 @@
 				{"x":240, "y":330}
 			],
 			"time" : 8000,
-			"duration" : 450
+			"animatetime" : 450
 		}
 	]
 }
