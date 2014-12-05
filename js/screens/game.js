@@ -12,7 +12,9 @@ GameStates.Game = {
 
 	setupWorld: function() {
 		this.add.sprite(0, 0, 'bg');
-		this.add.sprite(0, 0, 'panel');
+		var panel = this.add.sprite(0, 0, 'panel');
+		var notificationText = this.add.text(10, panel.height/2, "Ready!", { font: "30px Concert One", fill: "#fff"});
+		notificationText.anchor.setTo(0.5, 0.5);
 		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2, 0, 'level');
 		level.anchor.setTo(0.5, 0);
 		var lvText = this.add.text(level.x, level.y, this.level+1, { font: "36px Concert One", fill: "#fff"});
