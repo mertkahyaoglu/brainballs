@@ -13,7 +13,7 @@ GameStates.Game = {
 	setupWorld: function() {
 		this.add.sprite(0, 0, 'bg');
 		var panel = this.add.sprite(0, 0, 'panel');
-		this.notificationText = this.add.text(10, panel.height/2, "Ready!", { font: "30px Concert One", fill: "#fff"});
+		this.notificationText = this.add.text(10, panel.height/2, "", { font: "30px Concert One", fill: "#fff"});
 		this.notificationText.anchor.setTo(0, 0.5);
 		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2, 0, 'level');
 		level.anchor.setTo(0.5, 0);
@@ -29,7 +29,7 @@ GameStates.Game = {
 
 		//variables
 		this.gametime = this.time.now;
-		this.waittime = 3000;
+		this.waittime = 4000;
 		this.animatetime = level.animatetime;
 		this.started = false;
 		this.animated = false;
@@ -81,7 +81,7 @@ GameStates.Game = {
 		this.notificationText.setText("Start!");
 		this.started = true;
 		this.startTime = this.time.now;
-		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.levelTime, Phaser.Easing.None, true, 500, false);
+		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.levelTime, Phaser.Easing.None, true, false);
 	},
 
 	getMatches: function() {
@@ -99,6 +99,10 @@ GameStates.Game = {
 
 	update: function() {
 		console.log("Game Time:", this.getGameTime());
+		if (!this.animated && this.getGameTime() <= this.waittime) {
+			var timer = this.math.floor((this.waittime - this.getGameTime()) / 1000);
+			this.notificationText.setText(timer > 0 ? "Ready! " + timer : "Ready!");
+		}		
 		if(!this.animated && this.getGameTime() >= this.waittime) {
 			this.animateSequence();
 		}
