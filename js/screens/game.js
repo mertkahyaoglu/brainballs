@@ -4,7 +4,7 @@ GameStates.Game = {
 		this.level = level;
 		this.prevscore = score;
 	},
-	
+
 	create: function() {
 		this.setupWorld();
 		this.setupLevel();
@@ -32,6 +32,7 @@ GameStates.Game = {
 		this.waittime = 4000;
 		this.animatetime = level.animatetime;
 		this.started = false;
+		this.animating = false;
 		this.animated = false;
 		this.timeIsOut = false;
 		this.finish = false;
@@ -49,7 +50,7 @@ GameStates.Game = {
 	    }
 
 	    //setup sequence
-		for (var i = 0; i < this.NUM_BALLS; i++) 
+		for (var i = 0; i < this.NUM_BALLS; i++)
 			this.sequence.push(i);
     	this.sequence = this.math.shuffleArray(this.sequence);
 	},
@@ -61,7 +62,7 @@ GameStates.Game = {
 	},
 
 	animateSequence: function() {
-		this.animated = true;			
+		this.animating = true;
 		var ballTween;
 		var animateperball = this.animatetime / this.NUM_BALLS / 2;
 		for (var i = 0; i < this.NUM_BALLS; i++) {
@@ -69,6 +70,11 @@ GameStates.Game = {
 
     		ballTween = this.add.tween(ball.scale).to( {x: 1.3, y: 1.3}, animateperball, Phaser.Easing.Back.InOut, true, i * animateperball, false).to( {x: 1, y: 1}, animateperball, Phaser.Easing.Back.InOut, true, false);
     	}
+    	ballTween.onComplete.add(this.setAnimated, this);
+	},
+
+	setAnimated: function() {
+		this.animated = true;
 	},
 
 	startGame: function() {
@@ -78,8 +84,8 @@ GameStates.Game = {
 		    ball.input.start(0, true);
 		    ball.events.onInputDown.addOnce(this.onBallSelect.bind(this));
 		}
-		this.notificationText.setText("Start!");
 		this.started = true;
+		this.notificationText.setText("Start!");
 		this.startTime = this.time.now;
 		this.timerTween = this.add.tween(this.timer.scale).to( {x: 1, y: this.timerRatio}, this.levelTime, Phaser.Easing.None, true, false);
 	},
@@ -102,11 +108,11 @@ GameStates.Game = {
 		if (!this.animated && this.getGameTime() <= this.waittime) {
 			var timer = this.math.floor((this.waittime - this.getGameTime()) / 1000);
 			this.notificationText.setText(timer > 0 ? "Ready! " + timer : "Ready!");
-		}		
-		if(!this.animated && this.getGameTime() >= this.waittime) {
+		}
+		if(!this.animating && this.getGameTime() >= this.waittime) {
 			this.animateSequence();
 		}
-		if (!this.started && this.getGameTime() >= this.waittime + this.animatetime) {
+		if (!this.started && this.animated) {
 			this.startGame();
 		}
 		if (!this.finish) {
@@ -138,7 +144,7 @@ GameStates.Game = {
 			this.notificationText.setText("Time is out!");
 			this.finish = true;
 			for (var i = 0; i < this.NUM_BALLS; i++) {
-				this.balls.getAt(i).inputEnabled = false;				
+				this.balls.getAt(i).inputEnabled = false;
 			}
 			var game = this;
 			setTimeout(function() {
