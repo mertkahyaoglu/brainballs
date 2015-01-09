@@ -3,12 +3,12 @@ GameStates.GameWin = {
 	init: function(level, score) {
     	this.level = level;
     	this.score = score;
-    },
+  },
 
 	create: function() {
 		this.add.sprite(0, 0, 'bg');
-		var levelsText = this.add.text(this.world.width/2, 50, "Score:"+this.score, { font: "40px Concert One", fill: "#fff"});
-		levelsText.anchor.setTo(0.5, 0);
+		var scoreText = this.add.text(this.world.width/2, 50, "Score:"+this.score, { font: "40px Concert One", fill: "#fff"});
+		scoreText.anchor.setTo(0.5, 0);
 
 		var next = this.add.sprite(this.world.width/2-50,200, 'next');
 		next.anchor.setTo(0.5, 0.5);
@@ -26,7 +26,10 @@ GameStates.GameWin = {
 	},
 
 	nextLevel: function() {
-		this.state.start('Game', true, false, this.level + 1, this.score);
+		if(this.level != last)
+			this.state.start('Game', true, false, this.level + 1, this.score);
+		else
+			this.state.start('GameEnd', true, false, this.score);
 	},
 
 	menu: function() {
