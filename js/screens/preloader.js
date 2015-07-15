@@ -9,7 +9,6 @@ GameStates.Preloader = {
         this.load.json('levels', 'assets/levels.json');
         this.load.image('logo', 'assets/logo.png');
         this.load.image('play', 'assets/play.png');
-        this.load.image('scores', 'assets/scores.png');
         this.load.image('panel', 'assets/panel.png');
         this.load.image('level', 'assets/level.png');
         this.load.image('levelitem', 'assets/levelitem.png');
