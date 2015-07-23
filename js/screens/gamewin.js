@@ -26,7 +26,7 @@ GameStates.GameWin = {
 	},
 
 	nextLevel: function() {
-		if(this.level != last)
+		if(this.level != "last")
 			this.state.start('Game', true, false, this.level + 1, this.score);
 		else
 			this.state.start('GameEnd', true, false, this.score);

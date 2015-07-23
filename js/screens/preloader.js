@@ -28,8 +28,7 @@ GameStates.Preloader = {
     },
 
     update: function() {
-        //if(this.time.totalElapsedSeconds() > 1) // wait if loads too quick to show logo.
-            this.state.start('Menu');
+        this.state.start('Menu');
     }
 
 };
