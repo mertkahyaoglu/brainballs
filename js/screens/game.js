@@ -149,7 +149,7 @@ GameStates.Game = {
 			var game = this;
 			setTimeout(function() {
 				console.log("Time is out");
-				game.state.start("GameOver", true, false, game.level, game.score+game.prevscore);
+				game.state.start("GameOver", true, false, game.level, 0+game.prevscore);
 			}, 1000);
 		}
 	}
