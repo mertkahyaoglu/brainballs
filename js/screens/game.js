@@ -104,7 +104,6 @@ GameStates.Game = {
 	},
 
 	update: function() {
-		console.log("Game Time:", this.getGameTime());
 		if (!this.animated && this.getGameTime() <= this.waittime) {
 			var timer = this.math.floor((this.waittime - this.getGameTime()) / 1000);
 			this.notificationText.setText(timer > 0 ? "Ready! " + timer : "Ready!");
@@ -140,7 +139,7 @@ GameStates.Game = {
 				game.state.start(result, true, false, game.level, game.score+game.prevscore);
 			}, 1000);
 		}
-		if (this.started && this.time.elapsedSince(this.startTime) >= this.levelTime) {
+		if (this.started && this.time.elapsedSince(this.startTime) >= this.levelTime + 1000) {
 			this.notificationText.setText("Time is out!");
 			this.finish = true;
 			for (var i = 0; i < this.NUM_BALLS; i++) {
