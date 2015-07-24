@@ -6,8 +6,12 @@ GameStates.GameOver = {
     },
 
 	create: function() {
-		this.add.sprite(0, 0, 'bg');
-		var levelsText = this.add.text(this.world.width/2, 50, "Score:"+this.score, { font: "40px Concert One", fill: "#fff"});
+		this.stage.backgroundColor = "#2451cc";
+		var tscore = 0;
+		for (var i = 0; i < this.level; i++) {
+			tscore += this.cache.getJSON('levels').levels[i].time;
+		}
+		var levelsText = this.add.text(this.world.width/2, 50, "Total Score: "+ tscore, { font: "32px Concert One", fill: "#fff"});
 		levelsText.anchor.setTo(0.5, 0);
 		var gameover = this.add.sprite(this.world.width/2, 180, 'gameover');
 		gameover.anchor.setTo(0.5, 0.5);

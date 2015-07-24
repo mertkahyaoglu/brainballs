@@ -11,13 +11,13 @@ GameStates.Game = {
 	},
 
 	setupWorld: function() {
-		this.add.sprite(0, 0, 'bg');
+		this.stage.backgroundColor = "#2451cc";
 		var panel = this.add.sprite(0, 0, 'panel');
 		this.notificationText = this.add.text(10, panel.height/2, "", { font: "30px Concert One", fill: "#fff"});
 		this.notificationText.anchor.setTo(0, 0.5);
-		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2, 0, 'level');
+		var level = this.add.sprite(this.world.width -  this.cache.getImage("level").width / 2 - 5, 5, 'level');
 		level.anchor.setTo(0.5, 0);
-		var lvText = this.add.text(level.x, level.y, this.level+1, { font: "36px Concert One", fill: "#fff"});
+		var lvText = this.add.text(level.x, level.y + 5, this.level+1, { fill: "#fff"});
 		lvText.anchor.setTo(0.5, 0);
 		this.timer = this.add.sprite(this.world.centerX, this.world.height, "timer");
 		this.timer.anchor.setTo(0.5, 1);
@@ -136,7 +136,12 @@ GameStates.Game = {
 				this.notificationText.setText("Wrong!");
 			var game = this;
 			setTimeout(function() {
-				game.state.start(result, true, false, game.level, game.score+game.prevscore);
+				if(result == "GameWin") {
+					game.state.start(result, true, false, game.level, game.score);
+				}
+				else if (result == "GameOver") {
+					game.state.start(result, true, false, game.level, game.prevscore);
+				}
 			}, 1000);
 		}
 		if (this.started && this.time.elapsedSince(this.startTime) >= this.levelTime + 1000) {
@@ -147,8 +152,7 @@ GameStates.Game = {
 			}
 			var game = this;
 			setTimeout(function() {
-				console.log("Time is out");
-				game.state.start("GameOver", true, false, game.level, 0+game.prevscore);
+				game.state.start("GameOver", true, false, game.level, game.prevscore);
 			}, 1000);
 		}
 	}

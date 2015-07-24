@@ -6,8 +6,8 @@ GameStates.GameWin = {
   },
 
 	create: function() {
-		this.add.sprite(0, 0, 'bg');
-		var scoreText = this.add.text(this.world.width/2, 50, "Score:"+this.score, { font: "40px Concert One", fill: "#fff"});
+		this.stage.backgroundColor = "#2451cc";
+		var scoreText = this.add.text(this.world.width/2, 50, "Elapsed Time: "+this.score+" sec", { font: "30px Concert One", fill: "#fff"});
 		scoreText.anchor.setTo(0.5, 0);
 
 		var next = this.add.sprite(this.world.width/2-50,200, 'next');

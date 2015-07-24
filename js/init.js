@@ -4,7 +4,6 @@ GameStates.Init = {
 
     preload: function() {
         this.load.image('loadingbar', 'assets/loadingbar.png');
-        this.load.image('bg', 'assets/bg.png');
     },
 
     create: function(){
@@ -20,5 +19,5 @@ GameStates.Init = {
     isFirefoxOS: function(){
         return (!!"mozApps" in navigator && navigator.userAgent.search("Mobile")) != -1;
     }
-    
+
 };

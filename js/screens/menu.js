@@ -1,7 +1,7 @@
 GameStates.Menu = {
 
 	create: function() {
-		this.add.sprite(0, 0, 'bg');
+		this.stage.backgroundColor = "#2451cc";
 		var logo = this.add.sprite(this.world.centerX, 120, 'logo');
 		logo.anchor.setTo(0.5, 0.5);
 		var btn_play = this.add.sprite(this.world.centerX, this.world.centerY + 50, 'play');

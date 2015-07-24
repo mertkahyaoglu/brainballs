@@ -1,7 +1,7 @@
 GameStates.Preloader = {
 
     preload: function() {
-        this.add.sprite(0, 0, 'bg');
+        this.stage.backgroundColor = "#2451cc";
         this.loadingbar = this.add.sprite(this.world.centerX - this.cache.getImage('loadingbar').width / 2, this.world.centerY, 'loadingbar');
         this.load.setPreloadSprite(this.loadingbar);
 
@@ -11,7 +11,6 @@ GameStates.Preloader = {
         this.load.image('play', 'assets/play.png');
         this.load.image('panel', 'assets/panel.png');
         this.load.image('level', 'assets/level.png');
-        this.load.image('levelitem', 'assets/levelitem.png');
         this.load.image('timer', 'assets/timer.png');
         this.load.image('ball_idle', 'assets/ball_idle.png');
         this.load.image('ball_select', 'assets/ball_select.png');
