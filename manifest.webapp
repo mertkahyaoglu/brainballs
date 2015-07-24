@@ -1,0 +1,16 @@
+{
+    "version": "0.1",
+    "name": "Brain Balls",
+    "description": "A fun memory game",
+    "icons": {
+    	"128": "/assets/icon-128.png"
+    },
+    "launch_path": "/index.html",
+    "developer": {
+        "name": "Mert Kahyaoğlu",
+        "url": "ceng.mu.edu.tr/~mkahyaoglu11"
+    },
+    "fullscreen": true,
+    "orientation": [ "portrait" ],
+    "installs_allowed_from": ["*"]
+}
