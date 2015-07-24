@@ -26,10 +26,12 @@ GameStates.GameWin = {
 	},
 
 	nextLevel: function() {
-		if(this.level != "last")
-			this.state.start('Game', true, false, this.level + 1, this.score);
-		else
+		if(this.level == 5) {
 			this.state.start('GameEnd', true, false, this.score);
+		}
+		else{
+			this.state.start('Game', true, false, this.level + 1, this.score);
+		}
 	},
 
 	menu: function() {
