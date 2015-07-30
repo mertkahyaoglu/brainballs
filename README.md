@@ -1,4 +1,4 @@
-Brain Balls [(Demo)][1]
+Brain Balls [(Demo)][1] - [Android](https://play.google.com/store/apps/details?id=com.mertkahyaoglu.brainballs.android)
 ==========
 
 >Brain Balls is a memory game created with Phaser.js. The aim of the game is to remember sequences of balls.
